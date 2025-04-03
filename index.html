@@ -7,24 +7,13 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <div class="container">
         <h1>Welcome to Anime Photo Converter</h1>
-        <p>Upload your photo and convert it into anime style!</p>
-        
-        <label for="file-upload" class="custom-file-upload">Choose a Photo</label>
-        <input type="file" id="file-upload" accept="image/*">
-        
-        <br><br>
-        
-        <button id="convert-btn">Convert to Anime</button>
-        
-        <br><br>
-        
-        <div id="output">
-            <!-- Converted Image Will Be Displayed Here -->
-        </div>
+        <p>Convert your photos into stunning anime style.</p>
+        <input type="file" id="upload" accept="image/*">
+        <button onclick="convertToAnime()">Convert</button>
+        <div id="output"></div>
     </div>
-
+    <script src="script.js"></script>
 </body>
 </html>￼Enter
