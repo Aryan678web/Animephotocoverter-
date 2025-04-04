@@ -21,7 +21,7 @@ async function convertToAnime() {
         const response = await fetch("https://api.deepai.org/api/toonify", {
             method: "POST",
             headers: {
-                "api-key":"3e61286e-5791-4d45-9156-6d2bbf335037
+                "api-key": "3e61286e-5791-4d45-9156-6d2bbf335037"
             },
             body: formData
         });
@@ -39,6 +39,13 @@ async function convertToAnime() {
     } catch (error) {
         outputDiv.innerHTML = `<p style="color: red;">Something went wrong! Please check your internet or API key.</p>`;
     }
-}console.log("Button clicked");
-console.log("Image uploaded");
-console.log("API call sent");
+}
+
+// Debugging logs
+console.log("Script Loaded");
+document.getElementById("convert-btn").addEventListener("click", () => {
+    console.log("Button clicked");
+});
+document.getElementById("upload").addEventListener("change", () => {
+    console.log("Image uploaded");
+});￼Enter
