@@ -1,27 +1,28 @@
-async function convertToAnime() {
+document.getElementById("convert-btn").addEventListener("click", async function () {
+    const apiKey = "e80a2dbf-6a11-4264-be2a-5d65e349fa5e";  // आपकी DeepAI API Key
     const uploadInput = document.getElementById("upload");
-    const file = uploadInput.files[0];
     const outputDiv = document.getElementById("output");
 
-    if (!file) {
-        alert("Please upload an image first!");
+    if (uploadInput.files.length === 0) {
+        alert("कृपया पहले एक इमेज अपलोड करें!");
         return;
     }
 
-    // Show loading animation
-    outputDiv.innerHTML = `
-        <div class="loader"></div>
-        <p style="color: #555;">Converting to Anime... Please wait</p>
-    `;
-
+    const file = uploadInput.files[0];
     const formData = new FormData();
     formData.append("image", file);
+
+    // लोडिंग संदेश दिखाएं
+    outputDiv.innerHTML = `
+        <div class="loader"></div>
+        <p style="color: #555;">कृपया प्रतीक्षा करें, इमेज को Anime में परिवर्तित किया जा रहा है...</p>
+    `;
 
     try {
         const response = await fetch("https://api.deepai.org/api/toonify", {
             method: "POST",
             headers: {
-                "api-key": "3e61286e-5791-4d45-9156-6d2bbf335037"
+                "Api-Key": apiKey
             },
             body: formData
         });
@@ -30,22 +31,13 @@ async function convertToAnime() {
 
         if (result.output_url) {
             outputDiv.innerHTML = `
-                <h3 style="color: #333;">Your Anime Image:</h3>
+                <h3 style="color: #333;">आपकी Anime इमेज:</h3>
                 <img src="${result.output_url}" alt="Anime Image" style="max-width: 100%; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
             `;
         } else {
-            outputDiv.innerHTML = `<p style="color: red;">Error: Unable to convert image. Try again.</p>`;
+            outputDiv.innerHTML = `<p style="color: red;">त्रुटि: इमेज को परिवर्तित करने में असमर्थ। कृपया पुनः प्रयास करें।</p>`;
         }
     } catch (error) {
-        outputDiv.innerHTML = `<p style="color: red;">Something went wrong! Please check your internet or API key.</p>`;
+        outputDiv.innerHTML = `<p style="color: red;">कुछ गलत हो गया! कृपया अपने इंटरनेट कनेक्शन या API Key की जांच करें।</p>`;
     }
-}
-
-// Debugging logs
-console.log("Script Loaded");
-document.getElementById("convert-btn").addEventListener("click", () => {
-    console.log("Button clicked");
-});
-document.getElementById("upload").addEventListener("change", () => {
-    console.log("Image uploaded");
 });￼Enter
