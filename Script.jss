@@ -39,4 +39,6 @@ async function convertToAnime() {
     } catch (error) {
         outputDiv.innerHTML = `<p style="color: red;">Something went wrong! Please check your internet or API key.</p>`;
     }
-}
+}console.log("Button clicked");
+console.log("Image uploaded");
+console.log("API call sent");
