@@ -1,41 +1,35 @@
-async function casync function convertToAnime() {
-    const uploadInput = document.getElementById("upload");
-    const file = uploadInput.files[0];
-    const outputDiv = document.getElementById("output");
+document.getElementById("convert-btn").addEventListener("click", async function () {
+    let fileInput = document.getElementById("upload");
+    let outputDiv = document.getElementById("output");
 
-    if (!file) {
-        alert("Please upload an image first!");
+    if (fileInput.files.length === 0) {
+        alert("Please select an image first!");
         return;
     }
 
-    outputDiv.innerHTML = `
-        <div class="loader"></div>
-        <p style="color: #555;">Converting to Anime... Please wait</p>
-    `;
+    let formData = new FormData();
+    formData.append("image", fileInput.files[0]);
 
-    const formData = new FormData();
-    formData.append("image", file);
+    let apiKey = "e80a2dbf-6a11-4264-be2a-5d65e349fa5e"; // तुम्हारी DeepAI API Key
 
     try {
-        const response = await fetch("https://api.deepai.org/api/toonify", {
+        let response = await fetch("https://api.deepai.org/api/toonify", {
             method: "POST",
+            body: formData,
             headers: {
-                "api-key": "e80a2dbf-6a11-4264-be2a-5d65e349fa5e"
-            },
-            body: formData
+                "api-key": apiKey
+            }
         });
 
-        const result = await response.json();
+        let result = await response.json();
 
         if (result.output_url) {
-            outputDiv.innerHTML = `
-                <h3 style="color: #333;">Your Anime Image:</h3>
-                <img src="${result.output_url}" alt="Anime Image" style="max-width: 100%; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
-            `;
+            outputDiv.innerHTML = `<img src="${result.output_url}" alt="Anime Image" style="max-width: 100%;"/>`;
         } else {
-            outputDiv.innerHTML = `<p style="color: red;">Error: Unable to convert image. Try again.</p>`;
+            outputDiv.innerHTML = "<p>Conversion failed. Try again.</p>";
         }
     } catch (error) {
-        outputDiv.innerHTML = `<p style="color: red;">Something went wrong! Please check your internet or API key.</p>`;
+        console.error("Error:", error);
+        outputDiv.innerHTML = "<p>Error occurred while processing your image.</p>";
     }
-}￼Enter
+});
