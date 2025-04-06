@@ -1,40 +1,34 @@
-document.getElementById("upload-form").addEventListener("submit", async function (e) {
-  e.preventDefault();
+document.getElementById("upload-form").addEventListener("submit", async function (event) {
+  event.preventDefault();
 
-  const fileInput = document.getElementById("image-upload");
-  const image = fileInput.files[0];
-
-  if (!image) {
-    alert("कृपया एक इमेज अपलोड करें!");
-    return;
-  }
-
+  const fileInput = document.getElementById("image");
   const formData = new FormData();
-  formData.append("image", image);
+  formData.append("image", fileInput.files[0]);
 
-  const proxyUrl = "https://deepai-proxy-backend.onrender.com/anime-generator";
+  const loadingText = document.getElementById("loading-text");
+  const resultDiv = document.getElementById("result");
+
+  loadingText.style.display = "block";
+  resultDiv.innerHTML = "";
 
   try {
-    document.getElementById("result").innerHTML = "कृपया प्रतीक्षा करें, प्रोसेस हो रहा है...";
-
-    const response = await fetch(proxyUrl, {
+    const response = await fetch("https://deepai-proxy-backend.onrender.com/convert", {
       method: "POST",
       body: formData,
     });
 
     const data = await response.json();
 
+    loadingText.style.display = "none";
+
     if (data.output_url) {
-      document.getElementById("result").innerHTML = `
-        <h2>रिज़ल्ट:</h2>
-        <img src="${data.output_url}" alt="Anime Image" style="max-width: 100%; border-radius: 10px;" />
-        <br/><a href="${data.output_url}" download>डाउनलोड करें</a>
-      `;
+      resultDiv.innerHTML = `<img src="${data.output_url}" alt="Anime Image" style="max-width:100%; border-radius: 12px;" />`;
     } else {
-      document.getElementById("result").innerHTML = "कुछ गड़बड़ हो गई। कृपया फिर से प्रयास करें।";
+      resultDiv.innerHTML = "<p>Conversion failed. Please try again.</p>";
     }
   } catch (error) {
+    loadingText.style.display = "none";
+    resultDiv.innerHTML = "<p>Error occurred. Please check your connection or try again later.</p>";
     console.error("Error:", error);
-    document.getElementById("result").innerHTML = "सर्वर या नेटवर्क में कोई समस्या है!";
-  }
+  
 });￼Enter
