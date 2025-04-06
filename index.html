@@ -1,55 +1,17 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Anime Photo Converter</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #f0f0f0;
-      text-align: center;
-      padding: 20px;
-    }
-    .container {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 500px;
-      margin: auto;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    }
-    img {
-      max-width: 100%;
-      border-radius: 10px;
-    }
-    input[type="file"] {
-      margin: 10px 0;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #45a049;
-    }
-  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Anime Photo Converter</h1>
-    <form id="upload-form">
-      <input type="file" id="image-upload" accept="image/*" required />
-      <br />
-      <button type="submit">Convert to Anime</button>
-    </form>
-    <div id="result" style="margin-top: 20px;"></div>
-  </div>
+  <h1>अपनी फोटो को ऐनिमे में बदलें</h1>
+  <form id="upload-form">
+    <input type="file" id="image-upload" accept="image/*" required />
+    <button type="submit">Convert to Anime</button>
+  </form>
+  <div id="result" style="margin-top: 20px;"></div>
 
   <script src="script.js"></script>
 </body>
