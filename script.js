@@ -30,5 +30,5 @@ document.getElementById("upload-form").addEventListener("submit", async function
     loadingText.style.display = "none";
     resultDiv.innerHTML = "<p>Error occurred. Please check your connection or try again later.</p>";
     console.error("Error:", error);
-  
+  }
 });￼Enter
