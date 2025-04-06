@@ -1,34 +1,42 @@
-async function convertToAnime() {
-  const fileInput = document.getElementById("upload");
-  const outputDiv = document.getElementById("output");
+document.getElementById("upload-form").addEventListener("submit", async function (e) {
+  e.preventDefault();
 
-  if (!fileInput.files[0]) {
-    outputDiv.innerHTML = "Please upload an image.";
+  const fileInput = document.getElementById("image-upload");
+  const image = fileInput.files[0];
+
+  if (!image) {
+    alert("कृपया एक इमेज अपलोड करें।");
     return;
   }
 
   const formData = new FormData();
-  formData.append("image", fileInput.files[0]);
+  formData.append("image", image);
 
-  outputDiv.innerHTML = "Converting... Please wait.";
+  // Render Backend URL
+  const proxyUrl = "https://deepai-proxy-backend.onrender.com/anime-generator";
 
   try {
-    const response = await fetch("https://api.deepai.org/api/toonify", {
+    // Show loading
+    document.getElementById("result").innerHTML = "कृपया प्रतीक्षा करें, इमेज प्रोसेस हो रही है...";
+
+    const response = await fetch(proxyUrl, {
       method: "POST",
-      headers: {
-        "api-key": "e80a2dbf-6a11-4264-be2a-5d65e349fa5e"
-      },
       body: formData,
     });
 
-    const result = await response.json();
+    const data = await response.json();
 
-    if (result.output_url) {
-      outputDiv.innerHTML = `<img src="${result.output_url}" alt="Anime Image" style="max-width: 100%;">`;
+    if (data.output_url) {
+      document.getElementById("result").innerHTML = `
+        <h2>रिजल्ट:</h2>
+        <img src="${data.output_url}" alt="Anime Image" style="max-width: 100%; border-radius: 10px;" />
+        <br/><a href="${data.output_url}" download>डाउनलोड करें</a>
+      `;
     } else {
-      outputDiv.innerHTML = "Failed to convert image. Try again.";
+      document.getElementById("result").innerHTML = "कुछ गलत हो गया। कृपया फिर से प्रयास करें।";
     }
   } catch (error) {
-    outputDiv.innerHTML = "Error: " + error.message;
+    console.error("Error:", error);
+    document.getElementById("result").innerHTML = "नेटवर्क या सर्वर में कोई समस्या है।";
   }
-    }
+});￼Enter
