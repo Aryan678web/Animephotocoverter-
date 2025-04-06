@@ -5,7 +5,7 @@ document.getElementById("upload-form").addEventListener("submit", async function
   const image = fileInput.files[0];
 
   if (!image) {
-    alert("कृपया एक इमेज अपलोड करें");
+    alert("कृपया एक इमेज अपलोड करें!");
     return;
   }
 
@@ -15,7 +15,7 @@ document.getElementById("upload-form").addEventListener("submit", async function
   const proxyUrl = "https://deepai-proxy-backend.onrender.com/anime-generator";
 
   try {
-    document.getElementById("result").innerHTML = "कृपया प्रतीक्षा करें, प्रोसेस हो रही है...";
+    document.getElementById("result").innerHTML = "कृपया प्रतीक्षा करें, प्रोसेस हो रहा है...";
 
     const response = await fetch(proxyUrl, {
       method: "POST",
@@ -31,10 +31,10 @@ document.getElementById("upload-form").addEventListener("submit", async function
         <br/><a href="${data.output_url}" download>डाउनलोड करें</a>
       `;
     } else {
-      document.getElementById("result").innerHTML = "कुछ गड़बड़ हो गई। कृपया इमेज चेक करें।";
+      document.getElementById("result").innerHTML = "कुछ गड़बड़ हो गई। कृपया फिर से प्रयास करें।";
     }
   } catch (error) {
     console.error("Error:", error);
-    document.getElementById("result").innerHTML = "नेटवर्क या सर्वर में कोई समस्या है";
+    document.getElementById("result").innerHTML = "सर्वर या नेटवर्क में कोई समस्या है!";
   }
 });￼Enter
