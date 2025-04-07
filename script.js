@@ -1,34 +1,33 @@
-document.getElementById("upload-form").addEventListener("submit", async function (event) {
-  event.preventDefault();
+const convertButton = document.getElementById("convert-button");
+const imageInput = document.getElementById("image-input");
+const resultDiv = document.getElementById("result");
 
-  const fileInput = document.getElementById("image");
+convertButton.addEventListener("click", async () => {
+  const file = imageInput.files[0];
+  if (!file) {
+    alert("Please select an image first.");
+    return;
+  }
+
   const formData = new FormData();
-  formData.append("image", fileInput.files[0]);
+  formData.append("image", file);
 
-  const loadingText = document.getElementById("loading-text");
-  const resultDiv = document.getElementById("result");
-
-  loadingText.style.display = "block";
-  resultDiv.innerHTML = "";
+  resultDiv.innerHTML = "Processing... Please wait.";
 
   try {
     const response = await fetch("https://deepai-proxy-backend.onrender.com/convert", {
       method: "POST",
-      body: formData,
+      body: formData
     });
 
     const data = await response.json();
 
-    loadingText.style.display = "none";
-
     if (data.output_url) {
-      resultDiv.innerHTML = `<img src="${data.output_url}" alt="Anime Image" style="max-width:100%; border-radius: 12px;" />`;
+      resultDiv.innerHTML = `<img src="${data.output_url}" alt="Anime Image">`;
     } else {
-      resultDiv.innerHTML = "<p>Conversion failed. Please try again.</p>";
+      resultDiv.innerHTML = "Conversion failed. Please try again.";
     }
   } catch (error) {
-    loadingText.style.display = "none";
-    resultDiv.innerHTML = "<p>Error occurred. Please check your connection or try again later.</p>";
-    console.error("Error:", error);
+    resultDiv.innerHTML = "Error: " + error.message;
   }
 });￼Enter
